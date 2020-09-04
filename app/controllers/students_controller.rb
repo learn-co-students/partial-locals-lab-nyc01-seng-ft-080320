@@ -21,7 +21,11 @@ class StudentsController < ApplicationController
   end
 
   def index
-    @students = Student.all
+    @students = Student.search(params[:query])
+    if @students.empty?
+      flash[:my_errors] = "Your search found ZERO results."
+    end
+    render "index"
   end
 
   def student_params
